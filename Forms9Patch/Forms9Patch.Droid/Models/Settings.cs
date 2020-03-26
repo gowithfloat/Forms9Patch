@@ -141,8 +141,8 @@ namespace Forms9Patch
 
 #pragma warning disable IDE0040
 #pragma warning disable IDE0044 // Add readonly modifier
-        static Activity Activity;
-        static bool _falseflag;
+        static Activity Activity = null;
+        static bool _falseflag = false;
 #pragma warning restore IDE0044 // Add readonly modifier
 #pragma warning restore IDE0040
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
