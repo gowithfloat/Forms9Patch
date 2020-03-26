@@ -38,7 +38,14 @@ namespace Forms9Patch
             if (_platformToPngService == null)
                 throw new NotSupportedException("Cannot get HtmlService: must not be supported on this platform.");
             ToFileResult result = null;
-            using (var indicator = ActivityIndicatorPopup.Create())
+            if (Settings.ShouldShowActivityIndicator)
+            {
+                using (var indicator = ActivityIndicatorPopup.Create())
+                {
+                    result = await _platformToPngService.ToPngAsync(html, fileName);
+                }
+            }
+            else
             {
                 result = await _platformToPngService.ToPngAsync(html, fileName);
             }
@@ -58,7 +65,15 @@ namespace Forms9Patch
             if (_platformToPngService == null)
                 throw new NotSupportedException("Cannot get HtmlService: must not be supported on this platform.");
             ToFileResult result = null;
-            using (var indicator = ActivityIndicatorPopup.Create())
+
+            if (Settings.ShouldShowActivityIndicator)
+            {
+                using (var indicator = ActivityIndicatorPopup.Create())
+                {
+                    result = await _platformToPngService.ToPngAsync(webView, fileName);
+                }
+            }
+            else
             {
                 result = await _platformToPngService.ToPngAsync(webView, fileName);
             }

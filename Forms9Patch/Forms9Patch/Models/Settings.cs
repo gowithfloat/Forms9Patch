@@ -85,6 +85,11 @@ namespace Forms9Patch
         /// </summary>
         public static EffectMode SoundEffectMode = EffectMode.Default;
 
+        /// <summary>
+        /// Boolean if activity indicator should show while creating PDF/PNG
+        /// </summary>
+        public static bool ShouldShowActivityIndicator = true;
+
 
 
         #region Confirm that Forms9Patch has been initialized

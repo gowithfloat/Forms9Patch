@@ -21,6 +21,7 @@ namespace Forms9Patch.Droid
         public static Android.App.Activity Activity { get; private set; }
 
         static Android.Content.Context _context;
+
         /// <summary>
         /// An activity is a Context because ???  Android!
         /// </summary>
@@ -38,6 +39,8 @@ namespace Forms9Patch.Droid
         public List<Assembly> IncludedAssemblies => throw new NotImplementedException();
 
         internal static bool IsInitialized { get; private set; }
+
+        public static bool SaveExternally = true;
 
         #endregion
 

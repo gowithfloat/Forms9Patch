@@ -42,7 +42,14 @@ namespace Forms9Patch
             if (_platformToPdfService == null)
                 throw new NotSupportedException("Cannot get HtmlService: must not be supported on this platform.");
             ToFileResult result = null;
-            using (var indicator = ActivityIndicatorPopup.Create())
+            if (Settings.ShouldShowActivityIndicator)
+            {
+                using (var indicator = ActivityIndicatorPopup.Create())
+                {
+                    result = await _platformToPdfService.ToPdfAsync(html, fileName);
+                }
+            }
+            else
             {
                 result = await _platformToPdfService.ToPdfAsync(html, fileName);
             }
@@ -62,7 +69,15 @@ namespace Forms9Patch
             if (_platformToPdfService == null)
                 throw new NotSupportedException("Cannot get HtmlService: must not be supported on this platform.");
             ToFileResult result = null;
-            using (var indicator = ActivityIndicatorPopup.Create())
+
+            if (Settings.ShouldShowActivityIndicator)
+            {
+                using (var indicator = ActivityIndicatorPopup.Create())
+                {
+                    result = await _platformToPdfService.ToPdfAsync(webView, fileName);
+                }
+            }
+            else
             {
                 result = await _platformToPdfService.ToPdfAsync(webView, fileName);
             }
