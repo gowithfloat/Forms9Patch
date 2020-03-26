@@ -22,9 +22,21 @@ namespace Forms9Patch.Droid
     {
         public bool IsAvailable => Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Kitkat;
 
+        private string directoryPath
+        {
+            get
+            {
+                if (!Settings.SaveExternally)
+                {
+                    return System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+                }
+                return Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+            }
+        }
+
         public async Task<ToFileResult> ToPdfAsync(string html, string fileName)
         {
-            if (!await Permissions.WriteExternalStorage.ConfirmOrRequest())
+            if (Settings.SaveExternally && !await Permissions.WriteExternalStorage.ConfirmOrRequest())
                 return new ToFileResult(true, "Write External Stoarge permission must be granted for PNG images to be available.");
             var taskCompletionSource = new TaskCompletionSource<ToFileResult>();
             ToPdf(taskCompletionSource, html, fileName);
@@ -33,7 +45,7 @@ namespace Forms9Patch.Droid
 
         public async Task<ToFileResult> ToPdfAsync(Xamarin.Forms.WebView webView, string fileName)
         {
-            if (!await Permissions.WriteExternalStorage.ConfirmOrRequest())
+            if (Settings.SaveExternally && !await Permissions.WriteExternalStorage.ConfirmOrRequest())
                 return new ToFileResult(true, "Write External Stoarge permission must be granted for PNG images to be available.");
             var taskCompletionSource = new TaskCompletionSource<ToFileResult>();
             ToPdf(taskCompletionSource, webView, fileName);
@@ -45,8 +57,7 @@ namespace Forms9Patch.Droid
         public void ToPdf(TaskCompletionSource<ToFileResult> taskCompletionSource, string html, string fileName)
         {
             var size = new Size(8.5, 11);
-            var externalPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-            using (var dir = new Java.IO.File(externalPath))
+            using (var dir = new Java.IO.File(directoryPath))
             using (var file = new Java.IO.File(dir + "/" + fileName + ".pdf"))
             {
                 if (!dir.Exists())
@@ -77,9 +88,7 @@ namespace Forms9Patch.Droid
                     droidWebView = xfWebViewRenderer.Control;
                 if (droidWebView != null)
                 {
-                    //var size = new Size(8.5, 11);
-                    var externalPath = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-                    using (var dir = new Java.IO.File(externalPath))
+                    using (var dir = new Java.IO.File(directoryPath))
                     using (var file = new Java.IO.File(dir + "/" + fileName + ".pdf"))
                     {
                         if (!dir.Exists())
@@ -136,6 +145,18 @@ namespace Android.Print
         public string FileName { get; set; }
         public PrintDocumentAdapter Adapter { get; set; }
 
+        private Java.IO.File directoryPath
+        {
+            get
+            {
+                if (!Forms9Patch.Droid.Settings.SaveExternally) 
+                {
+                    return new Java.IO.File(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments));
+                }
+                return Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDocuments);
+            }
+        }
+
         public PdfLayoutResultCallback(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer) { }
 
@@ -167,7 +188,7 @@ namespace Android.Print
 
         public override void OnLayoutFinished(PrintDocumentInfo info, bool changed)
         {
-            using (var _dir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDocuments))
+            using (var _dir = directoryPath)
             {
                 if (!_dir.Exists())
                     _dir.Mkdir();
