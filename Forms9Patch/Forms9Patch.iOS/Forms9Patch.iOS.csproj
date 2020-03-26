@@ -69,11 +69,11 @@
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\Forms9Patch\Forms9Patch.csproj">
-      <Project>{61094D3D-545E-46EE-85F9-463A7507A1F8}</Project>
+      <Project>{43614381-50F5-4FC8-B793-8FC143DB9DE1}</Project>
       <Name>Forms9Patch</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\FormsGestures\FormsGestures\FormsGestures.csproj">
-      <Project>{0B50BF77-6D06-448F-8048-D52FC1D6C940}</Project>
+      <Project>{7B7BDFBF-6887-45BD-A2D6-A02D12E68F6E}</Project>
       <Name>FormsGestures</Name>
     </ProjectReference>
   </ItemGroup>
