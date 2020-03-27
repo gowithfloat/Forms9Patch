@@ -36,6 +36,13 @@
     <!--DebugType>full</DebugType-->
     <!--DebugType>full</DebugType-->
     <!--DebugType>full</DebugType-->
+    <!--DebugType>full</DebugType-->
+    <!--DebugType>full</DebugType-->
+    <!--DebugType>full</DebugType-->
+    <!--DebugType>full</DebugType-->
+    <!--DebugType>full</DebugType-->
+    <!--DebugType>full</DebugType-->
+    <!--DebugType>full</DebugType-->
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
