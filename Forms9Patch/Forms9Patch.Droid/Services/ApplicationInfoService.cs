@@ -21,7 +21,9 @@ namespace Forms9Patch.Droid
         {
             get
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 return Settings.Context.PackageManager.GetPackageInfo(Identifier, 0).VersionCode;
+#pragma warning restore CS0618 // Type or member is obsolete
             }
         }
 
@@ -65,7 +67,9 @@ namespace Forms9Patch.Droid
                 {
                     e.PrintStackTrace();
                 }
+#pragma warning disable CS0618 // Type or member is obsolete
                 var signatures = packageInfo.Signatures;
+#pragma warning restore CS0618 // Type or member is obsolete
                 byte[] cert = signatures[0].ToByteArray();
                 using (var input = new MemoryStream(cert))
                 {
